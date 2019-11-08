@@ -15,22 +15,28 @@ func main() {
 	var (
 		input db.Input
 		err   error
+		help  bool
 	)
-	flag.StringVar(&input.User, "u", "", "user")
-	flag.StringVar(&input.Pwd, "p", "", "password")
-	flag.StringVar(&input.DataBase, "d", "", "database")
-	flag.StringVar(&input.IP, "ip", "", "ip")
-	flag.StringVar(&input.Port, "port", "", "port")
-	flag.StringVar(&input.Table, "t", "", "table")
-	flag.StringVar(&input.SQL, "sql", "", "sql")
-	flag.IntVar(&input.Row, "row", 0, "row")
-	flag.IntVar(&input.Col, "col", 0, "col")
-	flag.StringVar(&input.File, "f", "", "file")
-	flag.StringVar(&input.Designation, "des", "", "des")
-	flag.StringVar(&input.Default, "df", "", "df")
-	flag.BoolVar(&input.Import, "i", false, "import")
-	flag.BoolVar(&input.Export, "e", false, "export")
+	flag.BoolVar(&help, "h", false, "help")
+	flag.StringVar(&input.User, "u", "", "database username")
+	flag.StringVar(&input.Pwd, "p", "", "database password")
+	flag.StringVar(&input.DataBase, "d", "", "the database to be connected")
+	flag.StringVar(&input.IP, "ip", "", "database ip address")
+	flag.StringVar(&input.Port, "port", "", "database port")
+	flag.StringVar(&input.Table, "t", "", "the table to be connected")
+	flag.StringVar(&input.SQL, "sql", "", "additional query conditions are required when exporting（sql）")
+	flag.IntVar(&input.Row, "row", 0, "the starting row of the form official data when importing")
+	flag.IntVar(&input.Col, "col", 0, "the starting col of the form official data when importing")
+	flag.StringVar(&input.File, "f", "", "file path/file name when importing or exporting")
+	flag.StringVar(&input.Designation, "des", "", "database fields corresponding to the table at import time (in order)")
+	flag.StringVar(&input.Default, "df", "", "default fields to be set when importing (eg id, create_time, state)")
+	flag.BoolVar(&input.Import, "i", false, "import data")
+	flag.BoolVar(&input.Export, "e", false, "export data")
 	flag.Parse()
+	if help {
+		flag.Usage()
+		return
+	}
 	input.CheckInput()
 	input.DB, err = db.OpenDB(input.DSN)
 	if err != nil {
