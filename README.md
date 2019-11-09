@@ -1,6 +1,8 @@
 # exdb
 Database - Table Operations Tool
 
+环境：Ubuntu16.04 数据库：MySQL  支持表格：.xls 、 .xlsx
+
 -h 使用帮助文档:
 
 ![](https://github.com/spider1998/exdb/blob/master/exdb1.png)
